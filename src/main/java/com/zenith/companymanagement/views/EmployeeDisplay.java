@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 
+import com.vaadin.data.provider.DataProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 
@@ -46,11 +47,11 @@ public class EmployeeDisplay extends HorizontalLayout implements View
 		employeeTable.setColumns("fname", "lname", "dob", "email");
 		
 		LocalDate date = LocalDate.now();
-		loadTestData(date);
+//		loadTestData(date);
 //		employeeTable.setItems(employeeManageService.retrieveEmployees());
-//		employeeTable.setDataProvider(
-//				(sortOrder, offset, limit) ->  employeeManageService.safeSubList(offset, limit).stream()
-//				, () -> employeeManageService.count());
+		employeeTable.setDataProvider(
+				(sortOrder, offset, limit) ->  employeeManageService.safeSubList(offset, limit).stream()
+				, () -> employeeManageService.count());
 		refreshTable();
 		
 		employeeTable.setSizeUndefined();
@@ -66,21 +67,21 @@ public class EmployeeDisplay extends HorizontalLayout implements View
 	
 
 	public void loadTestData(LocalDate date) {
-//		for (int i = 0; i <500000; i++) {
+		for (int i = 0; i <5000; i++) {
 			employeeManageService.addEmployee(
 					new Employee("John", "Doe", Designation.Admin, date, "johndoe@mail.co", "loopy", 3, 5));
 			employeeManageService.addEmployee(
 					new Employee("Jessie", "Jones", Designation.Employee, date, "johndoe@mail.co", "loopy", 3, 5));
 			employeeManageService.addEmployee(
 					new Employee("Edgar Alan", "Poe", Designation.Admin, date, "poe@poetry.ryhtm", "poopy", 3, 5));
-//		}
+		}
 	}
 
 	public void refreshTable() {
 		
-//		employeeTable.getDataProvider().refreshAll();
+		employeeTable.getDataProvider().refreshAll();
 		
-		employeeTable.setItems(Collections.EMPTY_LIST);
-		employeeTable.setItems(employeeManageService.retrieveEmployees());
+//		employeeTable.setItems(Collections.EMPTY_LIST);
+//		employeeTable.setItems(employeeManageService.retrieveEmployees());
 	}
 }

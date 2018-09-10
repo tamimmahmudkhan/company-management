@@ -1,17 +1,14 @@
 package com.zenith.companymanagement.domain;
 
-import java.time.LocalDate;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.time.LocalDate;
 
 @Data
-@NoArgsConstructor
 @Entity
 public class Employee
 {
@@ -40,4 +37,12 @@ public class Employee
 		workDays = w;
 		absentDays = a;
 	}
+
+	public Employee() {
+	}
+
+	protected boolean canEqual(Object other) {
+		return other instanceof Employee;
+	}
+
 }
